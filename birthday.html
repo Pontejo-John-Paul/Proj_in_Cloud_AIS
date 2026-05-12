@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Babi 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a1928;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* Stars */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      animation: twinkle var(--d) ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    /* Scene */
+    #scene {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* Glow behind candle/cake */
+    #glow {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,230,130,0.2) 0%, rgba(255,190,60,0.08) 45%, transparent 72%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -58%);
+      pointer-events: none;
+      transition: opacity 2s ease;
+      z-index: 0;
+    }
+
+    /* Make a wish */
+    #make-wish {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 200;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      animation: fadeInUp 1.4s ease both;
+      animation-delay: 0.4s;
+      transition: opacity 1s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Cake wrapper */
+    #cake-unit {
+      position: relative;
+      width: 240px;
+      height: 200px;
+      z-index: 2;
+      animation: fadeInUp 1s ease both;
+      animation-delay: 0.1s;
+    }
+
+    /* Candle */
+    #candle-wrap {
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 6;
+    }
+
+    #flame-wrap {
+      position: relative;
+      width: 16px;
+      height: 26px;
+      margin-bottom: 2px;
+    }
+    .flame-outer {
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 16px; height: 26px;
+      background: radial-gradient(ellipse at 50% 80%, #fffde0 8%, #fbbf24 42%, #f97316 78%, transparent 100%);
+      border-radius: 50% 50% 30% 30%;
+      transform-origin: bottom center;
+      transform: translateX(-50%);
+      animation: flicker 0.42s ease-in-out infinite;
+      transition: opacity 0.3s ease;
+    }
+    .flame-inner {
+      position: absolute;
+      bottom: 4px; left: 50%;
+      width: 7px; height: 13px;
+      background: radial-gradient(ellipse at 50% 80%, #fff 20%, #fde68a 80%, transparent 100%);
+      border-radius: 50% 50% 30% 30%;
+      transform: translateX(-50%);
+      animation: flicker 0.48s ease-in-out infinite;
+      animation-delay: 0.1s;
+      transition: opacity 0.3s ease;
+    }
+
+    #smoke {
+      display: none;
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      width: 5px;
+      height: 22px;
+      background: linear-gradient(to top, rgba(180,180,210,0.8), transparent);
+      border-radius: 3px;
+      transform: translateX(-50%);
+      animation: smokeRise 1.6s ease-out forwards;
+    }
+
+    .candle-body {
+      width: 12px;
+      height: 46px;
+      background: repeating-linear-gradient(
+        180deg,
+        #f8d7da 0px, #f8d7da 7px,
+        #fff0f0 7px, #fff0f0 14px
+      );
+      border-radius: 2px 2px 1px 1px;
+    }
+
+    /* Cake SVG */
+    #cake-svg {
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    /* Bottom text */
+    #bottom-text {
+      position: relative;
+      z-index: 2;
+      margin-top: 24px;
+      animation: fadeInUp 1.2s ease both;
+      animation-delay: 0.6s;
+    }
+    #happy-bday {
+      font-size: 32px;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.04em;
+      transition: opacity 1s ease;
+    }
+    #name-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 200;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.38);
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+
+    /* Hint */
+    #hint {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 200;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.2);
+      text-transform: uppercase;
+      transition: opacity 0.6s ease;
+      animation: fadeInUp 1s ease both;
+      animation-delay: 1.5s;
+      white-space: nowrap;
+    }
+
+    /* After blow message */
+    #after-msg {
+      display: none;
+      position: relative;
+      z-index: 2;
+      margin-top: 16px;
+      animation: fadeInUp 1s ease both;
+    }
+    #after-msg p {
+      font-size: 15px;
+      font-style: italic;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+    }
+
+    /* Hearts container */
+    #hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Animations */
+    @keyframes flicker {
+      0%,100%{ transform:scaleX(1) scaleY(1) translateX(-50%); }
+      20%{ transform:scaleX(0.78) scaleY(1.18) translateX(-50%); }
+      40%{ transform:scaleX(1.12) scaleY(0.86) translateX(-50%); }
+      60%{ transform:scaleX(0.84) scaleY(1.12) translateX(-50%); }
+      80%{ transform:scaleX(1.07) scaleY(0.91) translateX(-50%); }
+    }
+    @keyframes smokeRise {
+      0%{ opacity:0.8; transform:translateX(-50%) translateY(0) scaleX(1); }
+      100%{ opacity:0; transform:translateX(-50%) translateY(-55px) scaleX(3.5); }
+    }
+    @keyframes heartFloat {
+      0%{ opacity:1; transform:translateY(0) scale(1) rotate(var(--rot)); }
+      100%{ opacity:0; transform:translateY(-110px) scale(0.3) rotate(var(--rot)); }
+    }
+    @keyframes fadeInUp {
+      from{ opacity:0; transform:translateY(14px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeIn {
+      from{ opacity:0; } to{ opacity:1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Glow -->
+  <div id="glow"></div>
+
+  <!-- Hearts -->
+  <div id="hearts"></div>
+
+  <div id="scene">
+    <!-- Make a wish on top -->
+    <div id="make-wish">make a wish...</div>
+
+    <!-- Cake + Candle -->
+    <div id="cake-unit">
+
+      <!-- Candle on top of cake -->
+      <div id="candle-wrap">
+        <div id="flame-wrap">
+          <div class="flame-outer" id="flame-outer"></div>
+          <div class="flame-inner" id="flame-inner"></div>
+          <div id="smoke"></div>
+        </div>
+        <div class="candle-body"></div>
+      </div>
+
+      <!-- Cake SVG -->
+      <svg id="cake-svg" width="240" height="200" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Frosting top & drips -->
+        <path d="M42 92 Q55 74 68 86 Q81 72 94 84 Q107 70 120 82 Q133 70 146 84 Q159 72 172 86 Q185 74 198 88 L198 96 L42 96 Z" fill="#ede8dc"/>
+        <rect x="42" y="91" width="156" height="9" rx="2" fill="#ede8dc"/>
+        <!-- Drips -->
+        <ellipse cx="60" cy="106" rx="7" ry="12" fill="#ede8dc"/>
+        <ellipse cx="90" cy="109" rx="7" ry="14" fill="#ede8dc"/>
+        <ellipse cx="120" cy="108" rx="7" ry="13" fill="#ede8dc"/>
+        <ellipse cx="150" cy="109" rx="7" ry="14" fill="#ede8dc"/>
+        <ellipse cx="180" cy="106" rx="7" ry="11" fill="#ede8dc"/>
+        <!-- Top cake layer -->
+        <rect x="42" y="96" width="156" height="26" rx="3" fill="#7d6c62"/>
+        <!-- Cream divider -->
+        <rect x="34" y="122" width="172" height="6" rx="2" fill="#ede8dc"/>
+        <!-- Bottom cake layer -->
+        <rect x="34" y="124" width="172" height="34" rx="3" fill="#6b5c52"/>
+        <!-- Plate -->
+        <rect x="20" y="158" width="200" height="8" rx="4" fill="#ccc6b4" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- Text below cake -->
+    <div id="bottom-text">
+      <div id="happy-bday">happy birthday!</div>
+      <div id="name-text">Babi</div>
+    </div>
+
+    <!-- After blow -->
+    <div id="after-msg">
+      <p>I love you so much 💖</p>
+    </div>
+  </div>
+
+  <!-- Hint -->
+  <div id="hint">tap anywhere to blow the candle</div>
+
+  <script>
+    // Generate stars
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.cssText = `
+        left:${Math.random()*100}%;
+        top:${Math.random()*100}%;
+        --d:${2+Math.random()*3}s;
+        --delay:${Math.random()*4}s;
+        opacity:${0.2+Math.random()*0.5};
+        width:${Math.random()>0.85?3:2}px;
+        height:${Math.random()>0.85?3:2}px;
+      `;
+      starsEl.appendChild(s);
+    }
+
+    let blown = false;
+
+    document.body.addEventListener('click', blowCandle);
+
+    function blowCandle() {
+      if (blown) return;
+      blown = true;
+
+      const flameOuter = document.getElementById('flame-outer');
+      const flameInner = document.getElementById('flame-inner');
+      const glow = document.getElementById('glow');
+      const smoke = document.getElementById('smoke');
+      const hint = document.getElementById('hint');
+      const makeWish = document.getElementById('make-wish');
+      const happyBday = document.getElementById('happy-bday');
+      const afterMsg = document.getElementById('after-msg');
+      const hearts = document.getElementById('hearts');
+
+      // Hide hint
+      hint.style.opacity = '0';
+
+      // Kill flame
+      flameOuter.style.opacity = '0';
+      flameInner.style.opacity = '0';
+      flameOuter.style.animationPlayState = 'paused';
+      flameInner.style.animationPlayState = 'paused';
+
+      // Show smoke
+      setTimeout(() => { smoke.style.display = 'block'; }, 220);
+
+      // Dim glow
+      glow.style.opacity = '0';
+
+      // Dim make-a-wish
+      setTimeout(() => { makeWish.style.opacity = '0'; }, 350);
+
+      // Float hearts
+      const chars = ['💖','💕','🌸','✨','💗','🌙','⭐'];
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const h = document.createElement('div');
+          h.textContent = chars[Math.floor(Math.random() * chars.length)];
+          const rot = (Math.random()-0.5)*30;
+          h.style.cssText = `
+            position:absolute;
+            font-size:${14+Math.random()*16}px;
+            left:${30+Math.random()*40}%;
+            bottom:${38+Math.random()*8}%;
+            --rot:${rot}deg;
+            animation:heartFloat ${1.1+Math.random()*0.9}s ease-out forwards;
+          `;
+          hearts.appendChild(h);
+        }, i * 100);
+      }
+
+      // Fade happy birthday, show love message
+      setTimeout(() => {
+        happyBday.style.opacity = '0';
+        setTimeout(() => {
+          afterMsg.style.display = 'block';
+        }, 700);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
