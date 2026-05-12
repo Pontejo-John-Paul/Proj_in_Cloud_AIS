@@ -9,8 +9,8 @@ class TrikMailer {
 
     private string $smtpHost     = 'smtp.gmail.com';
     private int    $smtpPort     = 587;
-    private string $smtpUser     = 'pontejo.johnpaul.s@gmail.com';
-    private string $smtpPass     = 'rnyp ldbn qlpp ykez';  // Gmail App Password
+    private string $smtpUser     = 'your_email';
+    private string $smtpPass     = 'your_app_pass';  // Gmail App Password
     private string $fromEmail    = 'pontejo.johnpaul.s@gmail.com';
     private string $fromName     = 'TrikScan System';
 
